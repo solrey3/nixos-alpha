@@ -37,10 +37,9 @@
   home.packages = with pkgs; [
     # here is some command line tools I use frequently
     # feel free to add your own or remove some of them
-    gcc
-    util-linux
 
     # my shieeeeet
+    python312Packages.conda
     cowsay
     fzf # A command-line fuzzy finder
     htop
@@ -62,6 +61,14 @@
     which
     yarn
     zip
+    # GUI Apps
+    _1password
+    brave
+    nextcloud-client
+    obsidian
+    picard
+    vlc
+    wireshark
     
     # Extra stuff recommended
     nnn # terminal file manager

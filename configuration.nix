@@ -114,6 +114,8 @@
    lsof
    pavucontrol
    just
+   gcc
+   util-linux
   ];
 
   # Set the default editor to vim
