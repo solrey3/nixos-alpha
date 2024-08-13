@@ -7,6 +7,7 @@
 
   # link the configuration file in current directory to the specified location in home directory
   # home.file.".config/i3/wallpaper.jpg".source = ./wallpaper.jpg;
+  home.file.".tmux.conf".source = ./dotfiles/tmux/tmux.conf;
 
   # link all files in `./scripts` to `~/.config/i3/scripts`
   # home.file.".config/i3/scripts" = {
@@ -39,42 +40,64 @@
     # feel free to add your own or remove some of them
 
     # my shieeeeet
-    python312Packages.conda
+    ## Fonts
+    (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })  
+    ## CLI Tools 
     cowsay
+    file
+    fortune
     fzf # A command-line fuzzy finder
+    gawk
+    gnupg
+    gnused
+    gnutar
     htop
     jq # A lightweight and flexible command-line JSON processor
-    kubectl
     lazygit
-    # vimPlugins.LazyVim
     lsof # list open files
+    mc
     neofetch
-    (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })  
-    nmap # A utility for network discovery and security auditing
-    nodejs
+    nnn # terminal file manager
     ripgrep # recursively searches directories for a regex pattern
     stow
     tmux
     tokei
     tree
-    unzip
     which
-    yarn
+    # archives
+    p7zip
+    unzip
+    xz
     zip
-    # GUI Apps
+    ## devops
+    docker
+    docker-compose
+    kubectl
+    nmap # A utility for network discovery and security auditing
+    terraform
+    ## dev environments
+    conda # linux only
+    nodejs
+    yarn
+    ## testing
+    chromedriver
+    ## cloud platforms
+    awscli2
+    azure-cli
+    google-cloud-sdk
+    ## GUI Apps
     _1password
-    brave
-    nextcloud-client
-    obsidian
+    nextcloud-client # linux only
+    obsidian #linux64 only 
     picard
-    vlc
+    vlc #linux only
     wireshark
+    ### Web Browsers for Work
+    brave # linux only 
+    google-chrome
+    microsoft-edge
     
     # Extra stuff recommended
-    nnn # terminal file manager
-    # archives
-    xz
-    p7zip
     # utils
     yq-go # yaml processor https://github.com/mikefarah/yq
     eza # A modern replacement for ‘ls’
@@ -87,12 +110,7 @@
     socat # replacement of openbsd-netcat
     ipcalc  # it is a calculator for the IPv4/v6 addresses
     # misc
-    file
-    gnused
-    gnutar
-    gawk
     zstd
-    gnupg
     # nix related
     #
     # it provides the command `nom` works just like `nix`
@@ -115,26 +133,35 @@
     pciutils # lspci
     usbutils # lsusb
 
-
   ];
 
-  # alacritty - a cross-platform, GPU-accelerated terminal emulator
-  programs.alacritty = {
+  programs.bash = {
     enable = true;
-    # custom settings
-    settings = {
-      font.normal = { 
-        family = "JetBrainsMono Nerd Font";
-        style = "Regular";
-      };
-      font.size = 12;
-      env.TERM = "xterm-256color";
-      scrolling.multiplier = 5;
-      selection.save_to_clipboard = true;
-      # window.padding = { x = 24, y = 24 };
-      window.decorations = "Full";
-      window.opacity = 0.8;
+    enableCompletion = true;
+    # TODO add your custom bashrc here
+    bashrcExtra = ''
+      export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/go/bin"
+    '';
+    # set some aliases, feel free to add more or remove some
+    shellAliases = {
+      k = "kubectl";
+      urldecode = "python3 -c 'import sys, urllib.parse as ul; print(ul.unquote_plus(sys.stdin.read()))'";
+      urlencode = "python3 -c 'import sys, urllib.parse as ul; print(ul.quote_plus(sys.stdin.read()))'";
     };
+  };
+
+  # New Zsh configuration
+  programs.zsh = {
+    enable = true;
+    oh-my-zsh = {
+      enable = true;
+      theme = "robbyrussell";
+      plugins = [ "git" "z" "sudo" "kubectl" ];
+    };
+    initExtra = ''
+      export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/go/bin"
+      alias k="kubectl"
+    '';
   };
 
   # basic configuration of git, please change to your own
@@ -149,28 +176,34 @@
     enable = true;
   };
 
+  # alacritty - a cross-platform, GPU-accelerated terminal emulator
+  programs.alacritty = {
+    enable = true;
+    # custom settings
+    settings = {
+      font.normal = { 
+        family = "JetBrainsMono Nerd Font";
+        style = "Regular";
+      };
+      font.size = 12;
+      env.TERM = "xterm-256color";
+      scrolling.multiplier = 5;
+      selection.save_to_clipboard = true;
+      window.padding = { 
+        x = 24;
+        y = 24; 
+      };
+      window.decorations = "Full";
+      window.opacity = 0.8;
+    };
+  };
+
   # modern vim
   programs.neovim = {
     enable = true;
     defaultEditor = true;
     viAlias = true;
     vimAlias = true;
-  };
-
-  programs.bash = {
-    enable = true;
-    enableCompletion = true;
-    # TODO add your custom bashrc here
-    bashrcExtra = ''
-      export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/go/bin"
-    '';
-
-    # set some aliases, feel free to add more or remove some
-    shellAliases = {
-      k = "kubectl";
-      urldecode = "python3 -c 'import sys, urllib.parse as ul; print(ul.unquote_plus(sys.stdin.read()))'";
-      urlencode = "python3 -c 'import sys, urllib.parse as ul; print(ul.quote_plus(sys.stdin.read()))'";
-    };
   };
 
   programs.starship = {
