@@ -12,6 +12,13 @@
       # to avoid problems caused by different versions of nixpkgs.
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # Define your GitHub repo as an input
+    myDotfiles = {
+      url = "github:solrey3/dotfiles";
+      # Optionally, you can pin it to a specific branch, tag, or commit
+      # ref = "main";  # for a specific branch
+      # rev = "commit-hash";  # for a specific commit
+    };
   };
 
   outputs = inputs@{ nixpkgs, home-manager, ... }: {
