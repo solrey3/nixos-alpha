@@ -15,6 +15,13 @@
   #   executable = true;  # make all files executable
   # };
 
+  # link all files in `./dotfiles/nvim` to `~/.config/nvim`
+  home.file.".config/nvim" = {
+    source = ./dotfiles/nvim;
+    recursive = true;   # link recursively
+    executable = true;  # make all files executable
+  };
+
   # encode the file content in nix configuration file directly
   # home.file.".xxx".text = ''
   #     xxx
@@ -30,6 +37,8 @@
   home.packages = with pkgs; [
     # here is some command line tools I use frequently
     # feel free to add your own or remove some of them
+    gcc
+    util-linux
 
     neofetch
     nnn # terminal file manager
@@ -98,6 +107,7 @@
     htop
     kubectl
     lazygit
+    # vimPlugins.LazyVim
     (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })  
     nodejs
     stow
@@ -142,6 +152,7 @@
   programs.neovim = {
     enable = true;
     defaultEditor = true;
+    viAlias = true;
     vimAlias = true;
   };
 
