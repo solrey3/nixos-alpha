@@ -29,7 +29,7 @@
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
     # here is some command line tools I use frequently
-    # feel free to add your own or remove some of them    
+    # feel free to add your own or remove some of them
 
     neofetch
     nnn # terminal file manager
@@ -98,6 +98,7 @@
     htop
     kubectl
     lazygit
+    (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })  
     nodejs
     stow
     tmux
@@ -111,10 +112,12 @@
     enable = true;
     # custom settings
     settings = {
-      env.TERM = "xterm-256color";
-      font = {
-        size = 16;
+      font.normal = { 
+        family = "JetBrainsMono Nerd Font";
+        style = "Regular";
       };
+      font.size = 12;
+      env.TERM = "xterm-256color";
       scrolling.multiplier = 5;
       selection.save_to_clipboard = true;
       # window.padding = { x = 24, y = 24 };
@@ -142,18 +145,6 @@
     vimAlias = true;
   };
 
-  # starship - an customizable prompt for any shell
-  programs.starship = {
-    enable = true;
-    # custom settings
-    settings = {
-      add_newline = false;
-      aws.disabled = true;
-      gcloud.disabled = true;
-      line_break.disabled = true;
-    };
-  };
-
   programs.bash = {
     enable = true;
     enableCompletion = true;
@@ -169,6 +160,87 @@
       urlencode = "python3 -c 'import sys, urllib.parse as ul; print(ul.quote_plus(sys.stdin.read()))'";
     };
   };
+
+  programs.starship = {
+    enable = true;
+    settings = {
+      format = "[░▒▓](#a3aed2)[  ](bg:#a3aed2 fg:#090c0c)$hostname[](bg:#769ff0 fg:#a3aed2)$directory[](fg:#769ff0 bg:#394260)$git_branch$git_status[](fg:#394260 bg:#212736)$nodejs$rust$golang$php$gcloud$conda[](fg:#212736 bg:#1d2230)$time[ ](fg:#1d2230)\n$character";
+
+      hostname = {
+        ssh_only = false;
+        style = "bg:#a3aed2 fg:#090c0c";
+        format = "[$hostname]($style)";
+      };
+
+      directory = {
+        style = "fg:#e3e5e5 bg:#769ff0";
+        format = "[ $path ]($style)";
+        truncation_length = 3;
+        truncation_symbol = "…/";
+        substitutions = {
+          "Documents" = "󰈙 ";
+          "Downloads" = " ";
+          "Music" = " ";
+          "Pictures" = " ";
+        };
+      };
+
+      git_branch = {
+        symbol = "";
+        style = "bg:#394260";
+        format = "[[ $symbol $branch ](fg:#769ff0 bg:#394260)]($style)";
+      };
+
+      git_status = {
+        style = "bg:#394260";
+        format = "[[($all_status$ahead_behind )](fg:#769ff0 bg:#394260)]($style)";
+      };
+
+      nodejs = {
+        symbol = "";
+        style = "bg:#212736";
+        format = "[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)";
+      };
+
+      rust = {
+        symbol = "";
+        style = "bg:#212736";
+        format = "[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)";
+      };
+
+      golang = {
+        symbol = "";
+        style = "bg:#212736";
+        format = "[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)";
+      };
+
+      php = {
+        symbol = "";
+        style = "bg:#212736";
+        format = "[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)";
+      };
+
+      gcloud = {
+        symbol = "";
+        style = "bg:#212736";
+        format = "[[ $symbol ($account@$project) ](fg:#769ff0 bg:#212736)]($style)";
+      };
+
+      conda = {
+        symbol = "";
+        style = "bg:#212736";
+        format = "[[ $symbol $environment ](fg:#769ff0 bg:#212736)]($style)";
+      };
+
+      time = {
+        disabled = false;
+        time_format = "%F %T";
+        style = "bg:#1d2230";
+        format = "[[  $time ](fg:#a0a9cb bg:#1d2230)]($style)";
+      };
+    };
+  };
+
 
   # This value determines the home Manager release that your
   # configuration is compatible with. This helps avoid breakage
