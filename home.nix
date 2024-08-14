@@ -7,7 +7,7 @@
 
   # link the configuration file in current directory to the specified location in home directory
   # home.file.".config/i3/wallpaper.jpg".source = ./wallpaper.jpg;
-  home.file.".tmux.conf".source = ./dotfiles/tmux/tmux.conf;
+  home.file.".tmux.conf".source = ./dotfiles4nix/tmux/tmux.conf;
 
   # link all files in `./scripts` to `~/.config/i3/scripts`
   # home.file.".config/i3/scripts" = {
@@ -18,7 +18,7 @@
 
   # link all files in `./dotfiles/nvim` to `~/.config/nvim`
   home.file.".config/nvim" = {
-    source = ./dotfiles/nvim;
+    source = ./dotfiles4nix/nvim;
     recursive = true;   # link recursively
     executable = true;  # make all files executable
   };
@@ -47,6 +47,7 @@
     ## CLI Tools 
     _1password
     cowsay
+    curl
     file
     fortune
     fzf # A command-line fuzzy finder
@@ -65,6 +66,8 @@
     tmux
     tokei
     tree
+    util-linux # for uuidgen
+    wget
     which
     ### archives
     p7zip
