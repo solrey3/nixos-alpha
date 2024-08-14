@@ -40,9 +40,12 @@
     # feel free to add your own or remove some of them
 
     # my shieeeeet
+    
     ## Fonts
     (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })  
+    
     ## CLI Tools 
+    _1password
     cowsay
     file
     fortune
@@ -56,7 +59,6 @@
     lazygit
     lsof # list open files
     mc
-    neofetch
     nnn # terminal file manager
     ripgrep # recursively searches directories for a regex pattern
     stow
@@ -64,44 +66,51 @@
     tokei
     tree
     which
-    # archives
+    ### archives
     p7zip
     unzip
     xz
     zip
-    ## devops
+    ### devops
     docker
     docker-compose
     kubectl
     nmap # A utility for network discovery and security auditing
     terraform
-    ## dev environments
+    ### dev environments
     conda # linux only
     nodejs
     yarn
-    ## testing
-    chromedriver
-    ## cloud platforms
+    ### multimedia
+    ffmpeg
+    yt-dlp
+    ### cloud platforms
     awscli2
     azure-cli
+    doctl
     google-cloud-sdk
+
     ## GUI Apps
-    _1password
-    nextcloud-client # linux only
-    obsidian #linux64 only 
     picard
-    vlc #linux only
     wireshark
-    ### Web Browsers for Work
-    brave # linux only 
-    google-chrome
-    microsoft-edge
+    ### darwin or x86_64-linux
+    chromedriver 
+    google-chrome 
+    #### linux only
+    conda 
+    nextcloud-client 
+    vlc 
+    #### linux64 only 
+    obsidian 
+    brave 
+    #### x84_64-linux only 
+    microsoft-edge 
     
-    # Extra stuff recommended
-    # utils
+    ## Extra stuff recommended
+    ### utils
     yq-go # yaml processor https://github.com/mikefarah/yq
     eza # A modern replacement for ‘ls’
-    # networking tools
+    ### networking tools
     mtr # A network diagnostic tool
     iperf3
     dnsutils  # `dig` + `nslookup`
@@ -109,38 +118,46 @@
     aria2 # A lightweight multi-protocol & multi-source command-line download utility
     socat # replacement of openbsd-netcat
     ipcalc  # it is a calculator for the IPv4/v6 addresses
-    # misc
+    ### misc
     zstd
-    # nix related
+    ### nix related
     #
     # it provides the command `nom` works just like `nix`
     # with more details log output
     nix-output-monitor
-    # productivity
+    ### productivity
     hugo # static site generator
     glow # markdown previewer in terminal
-    # tops
+    ### tops
     btop  # replacement of htop/nmon
-    iotop # io monitoring
+    iotop # io monitoring # linux only 
     iftop # network monitoring
-    # system call monitoring
-    strace # system call monitoring
-    ltrace # library call monitoring
-    # system tools
-    sysstat
-    lm_sensors # for `sensors` command
-    ethtool
+    ### system call monitoring
+    strace # system call monitoring # linux only
+    ltrace # library call monitoring # linux only
+    ### system tools
+    sysstat # linux only 
+    lm_sensors # linux only 
+    ethtool # linux only
     pciutils # lspci
-    usbutils # lsusb
+    usbutils # lsusb # linux only 
 
   ];
 
+  # Bash configuration
   programs.bash = {
     enable = true;
     enableCompletion = true;
     # TODO add your custom bashrc here
     bashrcExtra = ''
       export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/go/bin"
+      alias hist="history 1"
+      alias p2="cd ~/Nextcloud/obsidian/player2; nvim todo.md"
+      alias dtf="cd ~/dotfiles; nvim"
+      alias ll='ls -lh'
+      alias la='ls -A'
+      alias l='ls -CF'
+      alias nano="nvim"
     '';
     # set some aliases, feel free to add more or remove some
     shellAliases = {
@@ -150,7 +167,7 @@
     };
   };
 
-  # New Zsh configuration
+  # Zsh configuration
   programs.zsh = {
     enable = true;
     oh-my-zsh = {
@@ -161,6 +178,13 @@
     initExtra = ''
       export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/go/bin"
       alias k="kubectl"
+      alias hist="history 1"
+      alias p2="cd ~/Nextcloud/obsidian/player2; nvim todo.md"
+      alias dtf="cd ~/dotfiles; nvim"
+      alias ll='ls -lh'
+      alias la='ls -A'
+      alias l='ls -CF'
+      alias nano="nvim"
     '';
   };
 
@@ -171,9 +195,17 @@
     userEmail = "solrey3@solrey3.com";
   };
 
-  # Github CLI
+  # Github CLI configuration
   programs.gh = {
     enable = true;
+  };
+
+  # modern vim
+  programs.neovim = {
+    enable = true;
+    defaultEditor = true;
+    viAlias = true;
+    vimAlias = true;
   };
 
   # alacritty - a cross-platform, GPU-accelerated terminal emulator
@@ -198,14 +230,7 @@
     };
   };
 
-  # modern vim
-  programs.neovim = {
-    enable = true;
-    defaultEditor = true;
-    viAlias = true;
-    vimAlias = true;
-  };
-
+  # starship - The minimal, blazing-fast, and infinitely customizable prompt for any shell!
   programs.starship = {
     enable = true;
     settings = {

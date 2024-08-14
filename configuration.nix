@@ -76,6 +76,11 @@
     wireplumber.enable = true;
   };
 
+  # Bluetooth Support
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot 
+  services.blueman.enable = true; # enables the Blueman Bluetooth manager 
+
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
@@ -120,6 +125,7 @@
    just
    gcc
    util-linux
+   fastfetch
   ];
 
   # Set the default editor to nvim
