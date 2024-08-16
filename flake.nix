@@ -24,7 +24,7 @@
   outputs = inputs@{ nixpkgs, home-manager, ... }: {
     nixosConfigurations = {
       # TODO please change the hostname to your own
-      nixos-alpha = nixpkgs.lib.nixosSystem {
+      alpha = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
           ./configuration.nix
